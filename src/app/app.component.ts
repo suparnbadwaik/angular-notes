@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'sample-angular-app';
 
-  isFavoriteChanged() {
-    console.log('isFavoriteChanged() called from app.component.ts');
+  isFavoriteChanged(isFavFromInnerComponent) {
+    console.log(`isFavoriteChanged() called from app.component.ts : ${isFavFromInnerComponent}`);
   }
 }

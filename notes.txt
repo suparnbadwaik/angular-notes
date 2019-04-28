@@ -1,3 +1,6 @@
+GIT REPOSITORY :
+https://github.com/suparnbadwaik/angular-notes
+
 ng new sample-angular-app		    // create a new angular boilerplate app
 ng serve				            // run angular app
 
@@ -284,9 +287,14 @@ COMPONENTS :
 -----------
 Steps to emit from inner component to the outer component :
 ----------------------------------------------------------
-1. Add event (eg- favoriteChanged) to the outer component html
-2. Add the event function to the outer component ts file
-3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter
-4. Emit the change event from a function after which you want the outer component to be fired
+git commit : 9a2295f3ef7522546ebec2294197ef591d45f849
+1. Add event to the outer component html. eg- favoriteChanged="isFavChanged()" and define isFavChanged() in ts
+2. Add the event function to the outer component ts file. eg isFavChanged() { //log something }
+3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter. eg. @Output() favoriteChanged=new EventEmitter();
+4. Emit the change event from a function after which you want the outer component to be fired. eg. this.favoriteChanged.emit();
 Refer app.component.html/ts and favorite.component.html/ts for the example
 
+
+Passing the data through emit :
+------------------------------
+this.favoriteChanged.emit('test string');       // you can also pass objects which can be refered from inner to outer component
