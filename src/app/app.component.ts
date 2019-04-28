@@ -11,4 +11,8 @@ export class AppComponent {
   isFavoriteChanged(isFavFromInnerComponent) {
     console.log(`isFavoriteChanged() called from app.component.ts : ${isFavFromInnerComponent}`);
   }
+
+  isNewFavoriteChanged(eventArgs) {
+    console.log(`isNewFavoriteChanged() called from app.component.ts : ${eventArgs.newFav}`);
+  }
 }

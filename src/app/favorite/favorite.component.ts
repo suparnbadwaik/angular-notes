@@ -9,6 +9,7 @@ export class FavoriteComponent implements OnInit {
 
   @Input() isFavorite: boolean;
   @Output() favoriteChanged = new EventEmitter();
+  @Output() newFavChanged = new EventEmitter();
 
   constructor() { }
 
@@ -17,7 +18,9 @@ export class FavoriteComponent implements OnInit {
 
   onClick(): void {
     this.isFavorite = !this.isFavorite;
+    let myObj = { newFav: this.isFavorite };
     this.favoriteChanged.emit(this.isFavorite);
+    this.newFavChanged.emit(myObj);              // pass object
     console.log(`Is Favorite : ${this.isFavorite}`);
   }
 }
