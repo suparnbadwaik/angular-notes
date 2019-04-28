@@ -315,6 +315,8 @@ git commit : 9a2295f3ef7522546ebec2294197ef591d45f849
 2. Add the event function to the outer component ts file. eg isFavChanged() { //log something }
 3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter. 
     eg. @Output() favoriteChanged=new EventEmitter();
+
+git commit : 59cdf84ef30542da4c44a6dba3c23ae93daedda8
         @Output('favChange') favoriteChanged=new EventEmitter();    // give Alias to the Output decorator so that even 
                                                                     // if event name is changed, the code does not break
                                                                     // outerComp can now use favChange event to call its function
