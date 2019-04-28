@@ -167,6 +167,9 @@ export class CoursesComponent {
     }
 }
 
+
+
+
 @NgModule :
 ---------
 The NgModule decorator, located in app.module.ts file, consists of 4 details:
@@ -187,11 +190,15 @@ Note : When you add a dependency as a provider in a module, angular will create 
 viz. angular will pass the same instance to all the classes, services or modules. Thus service is singleton.
 
 
+
+
 Creating a service automatically :
 ---------------------------------
 ng g s courses
 s - service
 Creates courses.service file and CoursesService typescript class.
+
+
 
 
 @Injectable :
@@ -203,11 +210,13 @@ So why dont we need it in CoursesComponent ? The reason is that @Injectable is a
 
 
 
+
 #######################################################
 #######################################################
 ######### DISPLAYING DATA AND HANDLING EVENTS #########
 #######################################################
 #######################################################
+
 
 Property binding :
 -----------------
@@ -222,6 +231,8 @@ eg:
 <h2>{{myProperty.title}}</h2>       // better with interpolation
 <h2 [textContent]="myProperty.title"></h2>
 textContent is the property of the DOM.
+
+
 
 
 Attribute binding :
@@ -245,6 +256,8 @@ HTML is a markup language used to represent DOM.
 attr.colspan - tell angular that we are targetting attribute of an HTML element
 
 
+
+
 ngModel - Two way binding :
 ---------------------------
 <input type="text" [(ngModel)]="title" /> {{title}}
@@ -254,9 +267,13 @@ the ngModel is not a property of input
 To use ngModel, we need to import and use (in imports section) FormsModule in the app.module.ts file
 
 
+
+
 Pipes :
 ------
 ng g p title-case           // create a pipe
+
+
 
 
 Services :
@@ -272,6 +289,9 @@ NOTE : Any initialization other than initialization of injected dependencies mus
 
 ng g s post                 // create service using cli
 
+
+
+
 How to use a newly created service ? :
 -------------------------------------
 1. Add the new service to providers array in app.module.ts
@@ -283,11 +303,14 @@ This command will install a package that ensures backward-compatibility of RxJS.
 rxjs package itself would not work with your current code, with the addition of rxjs-compat it will.
 
 
+
+
 COMPONENTS :
 -----------
 Steps to emit from inner component to the outer component :
 ----------------------------------------------------------
 git commit : 9a2295f3ef7522546ebec2294197ef591d45f849
+
 1. Add event to the outer component html. eg- favoriteChanged="isFavChanged()" and define isFavChanged() in ts
 2. Add the event function to the outer component ts file. eg isFavChanged() { //log something }
 3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter. eg. @Output() favoriteChanged=new EventEmitter();
@@ -295,6 +318,13 @@ git commit : 9a2295f3ef7522546ebec2294197ef591d45f849
 Refer app.component.html/ts and favorite.component.html/ts for the example
 
 
+
+
 Passing the data through emit :
 ------------------------------
+git commit : 
+21e75d4f300b0a08fb80397878d39c0d14457aea
+841f16ced1f889915a27ad6adc450b9e6d935db7
+
 this.favoriteChanged.emit('test string');       // you can also pass objects which can be refered from inner to outer component
+this.newFavChange.emit(myObj);                  // access it using eventArgs in the ts file
