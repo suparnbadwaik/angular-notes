@@ -1,0 +1,292 @@
+ng new sample-angular-app		    // create a new angular boilerplate app
+ng serve				            // run angular app
+
+angular boilerplate app breakdown :
+-------------------------------------
+src :
+	It contains actual source code of our application.
+	It contains the below :
+	directories :
+    ------------
+    app (d) : It contains atleast 1 module and 1 component.
+	assets (d) : contains static assets like text files, images, icons, etc.
+	environments (d) : stores configuration settings for different environments.
+
+    files :
+    ------
+	main.ts (f) : is starting point of the application. we bootstrap main module of our application here and 
+    everything else starts from here.
+	polyfills.ts (f) : it imports some script needed for running angular since angular uses javascript versions that are 
+    not available in the current version of javascript supported by most browsers. Polyfills fills the gap between 
+    javascript features that angular needs and those supported by the browser.
+	test.ts (f) : for setting up our testing environment.
+	.editorconfig (f) : if you have some settings for the editor that you want all the team members to use.
+	karma.conf.js (f) : configuration for karma, a test runner for javascript code.
+	tsconfig.json (f) : contains typescript compiler settings based on which your ts code will be compiled into js code.
+	tslint.json (f) : typescript analysis tool for static code.
+
+
+Web pack :
+---------
+Webpack is a build automation tool used by angular. It will automatically detect changes made to the code, 
+compile it, bundle it and minify it. This is called as Hot Module Replacement (HMR).
+It automatically injects the scripts at runtime in our page.
+It takes all our scripts and styles, combines them, puts them in a bundle and then minifies that bundle for optimization.
+It generates the below bundles usually :
+polyfills.bundle.js
+main.bundle.js
+styles.bundle.js	=> styles stored in minified js file
+vendor.bundle.js	=> contains 3rd party libraries
+inline.bundle.js
+
+
+
+##########################################
+##########################################
+######### BASIC PARTS OF ANGULAR #########
+##########################################
+##########################################
+
+Module :
+-------
+Module is a container for group of related components. Every angular app has atleast 1 module which we call as app module.
+As the app grows, we mostly have multiple modules based on the functionality or the need.
+Eg for a teaching app modules can be.
+Courses, Messaging, Instructor, Admin
+
+
+Steps to create a component :
+----------------------------
+Create a component (.ts file)
+Register it in a module
+Add an element in an HTML markup
+
+Example :
+--------
+courses.component.ts :
+---------------------
+import { Component } from '@angular/core';
+
+@Component({
+	selector: 'courses',	//courses, .courses, #courses
+	template: '<h2>Courses</h2>'
+})
+export class CoursesComponent {
+
+}
+
+app.module.ts :
+--------------
+import { AppComponent } from './app.component';
+import { CourseComponent } from './courses.component';
+
+@NgModule({
+	declarations: [
+		AppComponent,
+		CoursesComponent
+	]
+});
+
+In order to import the component without using the file name extension, use a VS code plugin named 'Auto Import'
+
+
+Problems with creating the Component manually :
+----------------------------------------------
+1. Approach is tedious viz. create a component class, import angular core to use component.
+2. Register manually with App modules. 
+
+If we miss any of the steps above, the component cannot be used/found.
+Better do it automatically using ng as shown below :
+ng g c course
+g - generate
+c - controller
+course - name of the component files eg. course.component.ts, course.component.html, course.component.class
+         The class will be named as CourseComponent
+
+
+@Component({				            // This is a decorator
+	selector: 'myapp',
+	template: 'Hello App'
+});
+
+
+{{ 'Title : ' + myModel.title }}		// data binding using expression
+{{ myModel.getMyTitle() }}			    // databinding using function
+
+
+
+Directives :
+-----------
+ngFor :
+-----
+Whenever you are using a directive that modifies the structure of a DOM, use * with that directive.
+template:`<ul>
+    <li *ngFor="let course of coursesList">{{course}}</li>		// coursesList is the object, course is the variable/placeholder
+</ul>`
+
+
+Services :
+---------
+Problems with Http Endpoints.
+1. If we use http endpoints within the component, it would make both tightly coupled which we do not want.
+In the future when we write Unit tests, we dont want to be dependent upon a live http endpoint.
+2. There might be another page which might need this endpoint and we might add logic for it. 
+So we use that endpoint in other file as well.
+3. If the endpoint url changes, we will have to manually change every single call of the http endpoint.
+4. Component must only include presentation logic and not any other logic.
+
+Creating a basic service :
+-------------------------
+export class CoursesService {
+    getCourses() {
+        return [ 'course1', 'course2', 'course3' ];
+    }
+}
+
+Using it in a Component Class :
+------------------------------
+export class CoursesComponent {
+    constructor() {
+        // INCORRECT WAY - Tighly coupled
+        let service = new CoursesService();
+        this.courses = service.getCourses();
+    }
+}
+
+Since we are creating an instance of the service here, it becomes tighly coupled to the CoursesComponent class.
+Also, if we decide to add constructor parameters in the future, we will have to manually implement and change the declarations.
+So, rather than the above approach with these 2 problems, we can use the below approach.
+
+export class CoursesComponent {
+    // CORRECT WAY
+    constructor(service: CoursesService) {
+        this.courses = service.getCourses();
+    }
+}
+
+@NgModule :
+---------
+The NgModule decorator, located in app.module.ts file, consists of 4 details:
+1. declarations - declare components that you have created for the module
+2. imports - internal Modules that we want to use
+3. providers - array that registers all the dependencies that components in this module use.
+4. bootstrap - Module you want to start when the application starts
+
+So add to providers, the CoursesService.
+@NgModule({
+    .....
+    providers: [ 
+        CoursesService
+    ]
+})
+
+Note : When you add a dependency as a provider in a module, angular will create a sigle instance of that class or entire module.
+viz. angular will pass the same instance to all the classes, services or modules. Thus service is singleton.
+
+
+Creating a service automatically :
+---------------------------------
+ng g s courses
+s - service
+Creates courses.service file and CoursesService typescript class.
+
+
+@Injectable :
+------------
+When we create service automatically, we have @Injectable decorator that comes with it.
+It is needed "only if" the service has dependencies in its constructor.
+So why dont we need it in CoursesComponent ? The reason is that @Injectable is already present in the
+@Component decorator
+
+
+
+#######################################################
+#######################################################
+######### DISPLAYING DATA AND HANDLING EVENTS #########
+#######################################################
+#######################################################
+
+Property binding :
+-----------------
+With property binding, we bind the property of a DOM element to property of the component
+<img src="{{myProperty.imageURL}}" />       // This is interpolation
+<img [src]="myProperty.imageURL" />         // This is property binding
+When we use interpolation in this case, angular translates it into the second syntax
+
+What to use when ?
+Interpolation works well for adding dynamic values for headings or to render text.
+eg: 
+<h2>{{myProperty.title}}</h2>       // better with interpolation
+<h2 [textContent]="myProperty.title"></h2>
+textContent is the property of the DOM.
+
+
+Attribute binding :
+------------------
+We need to understand DOM vs HTML to understand attribute binding.
+DOM is a model of object that represents structure of a document.
+It is essentially a tree of objects in memory.
+<html>
+	<head>
+	</head>
+	<body>
+	</body>
+</html>
+
+HTML is a markup language used to represent DOM.
+<table>
+    <tr>
+        <td [attr.colspan]="myProperty.colspan"></td>
+    </tr>
+</table>
+attr.colspan - tell angular that we are targetting attribute of an HTML element
+
+
+ngModel - Two way binding :
+---------------------------
+<input type="text" [(ngModel)]="title" /> {{title}}
+It wouldnt work and you will get a console error saying that
+the ngModel is not a property of input
+
+To use ngModel, we need to import and use (in imports section) FormsModule in the app.module.ts file
+
+
+Pipes :
+------
+ng g p title-case           // create a pipe
+
+
+Services :
+---------
+To use a service in angular, import HttpModule in App module and declare it in imports section.
+If you get the error : Cannot find module '@angular/http'
+Install http using npm. npm install @angular/http@latest
+
+Refer posts.component.html/ts in order to understand how UI and services work together.
+Make sure to inderstand the template placeholder in html file named #titles. The data passed and placeholder name must be the same.
+
+NOTE : Any initialization other than initialization of injected dependencies must be done on ngOnInit lifecycle/method
+
+ng g s post                 // create service using cli
+
+How to use a newly created service ? :
+-------------------------------------
+1. Add the new service to providers array in app.module.ts
+2. Inject the service in the component.ts file
+
+Note : If you are getting any issue with Observable or rxjs, install the below plugin.
+npm install --save rxjs-compat
+This command will install a package that ensures backward-compatibility of RxJS. Even though the 
+rxjs package itself would not work with your current code, with the addition of rxjs-compat it will.
+
+
+COMPONENTS :
+-----------
+Steps to emit from inner component to the outer component :
+----------------------------------------------------------
+1. Add event (eg- favoriteChanged) to the outer component html
+2. Add the event function to the outer component ts file
+3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter
+4. Emit the change event from a function after which you want the outer component to be fired
+Refer app.component.html/ts and favorite.component.html/ts for the example
+
