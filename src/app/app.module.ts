@@ -8,13 +8,15 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { TitleCasePipe } from './pipes/title-case.pipe';
 import { PostsComponent } from './posts/posts.component';
 import { PostService } from './services/posts/post.service';
+import { PanelComponent } from './panel/panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FavoriteComponent,
     TitleCasePipe,
-    PostsComponent
+    PostsComponent,
+    PanelComponent
   ],
   imports: [
     BrowserModule,
