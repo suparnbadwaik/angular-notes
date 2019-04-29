@@ -343,6 +343,7 @@ git commit : 80bfbf916b43b941c82932185fd50e3dd36d0036
 
 Create Forms :
 -------------
+git commit : 906de16c6d870d14905006bf5924f9146f36e14a
 Refer contact-form.component.html and contact-form validation in style.css to check how to apply validation
 
 
