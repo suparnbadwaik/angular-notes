@@ -4,3 +4,9 @@
 body {
     background-color: seashell;
 }
+
+
+/* contact-form validation css */
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}

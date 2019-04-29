@@ -334,3 +334,15 @@ git commit :
 
 this.favoriteChanged.emit('test string');       // you can also pass objects which can be refered from inner to outer component
 this.newFavChange.emit(myObj);                  // access it using eventArgs in the ts file
+
+
+Like Component :
+---------------
+git commit : 80bfbf916b43b941c82932185fd50e3dd36d0036
+
+
+Create Forms :
+-------------
+Refer contact-form.component.html and contact-form validation in style.css to check how to apply validation
+
+

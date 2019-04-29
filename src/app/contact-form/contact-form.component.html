@@ -1,0 +1,39 @@
+<form>
+  <!-- div.form-group>label[for='first']+input[type='text'].form-control -->
+  <div class="form-group">
+    <label for="firstName"></label>
+    <!-- CLEANER TEMPLATE -->
+    <input 
+        required 
+        minlength="4" 
+        maxlength="8" 
+        pattern="banana" 
+        ngModel 
+        name="firstName" 
+        #firstName="ngModel" 
+        (change)="log(firstName)" 
+        type="text" 
+        class="form-control">
+    <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+      <div 
+        *ngIf="firstName.errors.required">
+            * First Name is needed
+      </div>
+      <div 
+        *ngIf="firstName.errors.minlength">
+            * Min length must be {{firstName.errors.minlength.requiredLength}} characters
+      </div>
+      <!-- Just log a model and view the error object to look at the above properties eg. {{firstName.errors.minlength.requiredLength}} -->
+      <div 
+        *ngIf="firstName.errors.pattern">
+            * Pattern mismatch
+      </div>
+    </div>
+  </div>
+  <!-- div.form-group>label[for='comment']+textarea[id='comment'].form-control -->
+  <div class="form-group">
+    <label for="comment"></label>
+    <textarea ngModel name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+</form>

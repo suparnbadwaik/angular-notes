@@ -10,6 +10,7 @@ import { PostsComponent } from './posts/posts.component';
 import { PostService } from './services/posts/post.service';
 import { PanelComponent } from './panel/panel.component';
 import { LikeComponent } from './like/like.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LikeComponent } from './like/like.component';
     TitleCasePipe,
     PostsComponent,
     PanelComponent,
-    LikeComponent
+    LikeComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
