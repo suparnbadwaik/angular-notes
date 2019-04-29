@@ -1,0 +1,11 @@
+.normal {
+    color: blue;
+}
+
+.highlighted {
+    color: red;
+}
+
+span.normal:hover {
+    cursor: pointer;
+}
