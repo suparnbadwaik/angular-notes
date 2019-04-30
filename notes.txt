@@ -349,6 +349,7 @@ Refer contact-form.component.html and contact-form validation in style.css to ch
 
 ngModelGroup :
 -------------
+git commit : b3d56f895233302cf5010092351bb2db534ab647
 ngModel can be used to refer a single element eg. we can set the ngModel property to a single control.
 ngModelGroup can be assigned to an entire section(s) in a form.
 Refer contact-form.component.html file to have a look on how to use the ngModelGroup.
