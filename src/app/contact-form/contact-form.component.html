@@ -86,5 +86,5 @@
     <label for="comment"></label>
     <textarea ngModel name="comment" id="comment" cols="30" rows="10" class="form-control"></textarea>
   </div>
-  <button class="btn btn-primary">Submit</button>
+  <button class="btn btn-primary" [disabled]="!f.dirty || !f.valid">Submit</button>
 </form>
