@@ -347,3 +347,10 @@ git commit : 906de16c6d870d14905006bf5924f9146f36e14a
 Refer contact-form.component.html and contact-form validation in style.css to check how to apply validation
 
 
+ngModelGroup :
+-------------
+ngModel can be used to refer a single element eg. we can set the ngModel property to a single control.
+ngModelGroup can be assigned to an entire section(s) in a form.
+Refer contact-form.component.html file to have a look on how to use the ngModelGroup.
+When you run the application, click the Submit button and check the form value. 
+It must contain contact and address objects instead of individual properties.
