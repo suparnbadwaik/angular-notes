@@ -3,7 +3,10 @@
     {{apptitle | titleCase} -->
 
     <!-- <posts></posts> -->
-    <favorite [isFavorite]="isFavorite" (favoriteChanged)="isFavoriteChanged($event)" (newFavChanged)="isNewFavoriteChanged($event)"></favorite>
+
+    <navbar></navbar>
+    <router-outlet></router-outlet>
+    <!-- <favorite [isFavorite]="isFavorite" (favoriteChanged)="isFavoriteChanged($event)" (newFavChanged)="isNewFavoriteChanged($event)"></favorite>
 
 
     <bootstrap-panel>
@@ -18,4 +21,5 @@
 
     <contact-form></contact-form>
 
+    <course></course> -->
 </div>

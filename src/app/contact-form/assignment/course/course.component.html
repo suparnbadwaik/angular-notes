@@ -1,0 +1,27 @@
+<form #fc="ngForm" (ngSubmit)="saveCourse(fc)">
+    <div *ngIf="courseName.touched && courseName.invalid">
+        <div class="alert alert-danger" *ngIf="courseName.errors.required">
+            * Course name is required
+        </div>
+        <div class="alert alert-danger" *ngIf="courseName.errors.minlength">
+            * Min length is {{courseName.errors.minlength.requiredLength}} characters
+        </div>
+      </div>
+  <div ngModelGroup="course" #course="ngModelGroup">
+    <div class="form-group">
+      <label for="courseName">Course Name</label>
+      <input type="text" required minlength="5" ngModel name="courseName" #courseName="ngModel" class="form-control">
+      <label for="courseName">Course Type</label>
+      <select ngModel name="courseType" #courseType="ngModel" class="form-control">
+        <option 
+            *ngFor="let course of courseTypes" 
+            [value]="course.id" 
+            [text]="course.type">
+        </option>
+      </select>
+      <input type="checkbox" ngModel name="moneyBackin30Days"> Money Back in 30 Days
+      <button class="btn btn-primary" [disabled]="!fc.dirty && fc.invalid">Submit</button>
+    </div>
+  </div>
+  <p>{{fc.value|json}}</p>
+</form>

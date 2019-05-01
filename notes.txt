@@ -355,3 +355,14 @@ ngModelGroup can be assigned to an entire section(s) in a form.
 Refer contact-form.component.html file to have a look on how to use the ngModelGroup.
 When you run the application, click the Submit button and check the form value. 
 It must contain contact and address objects instead of individual properties.
+
+
+Add radio button and other elements to the form :
+------------------------------------------------
+git commit : 0e3040b15ba02edc9a6019ec4c578dd9dc4db734
+
+
+Disable the submit button :
+--------------------------
+git commit : 7c91c9288b102510343400cd1417894b89a521bd
+Use forms valid and dirty property
