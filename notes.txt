@@ -388,7 +388,7 @@ In the html, add routerLinks instead of href for the anchor tag
 
 Router link active :
 -------------------
-git commit : 
+git commit : 1504d2f866418f69c29123d806c9bc68d5f7c6f1
 
 There is a directive called routerLinkActive which checks if the route link is active.
 And if the route link is active, you can specify classes to highlight it.
