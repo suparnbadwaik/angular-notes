@@ -394,3 +394,13 @@ There is a directive called routerLinkActive which checks if the route link is a
 And if the route link is active, you can specify classes to highlight it.
 
 <li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
+
+
+Programmatic Routing :
+---------------------
+git commit : b9beb72b1a32e1c48bc3d451c5abc24777b30155
+
+Refer github-followers.component.html/ts
+Inject router to the component ts and then use the navigate method. You can also pass the queryParams to the routes.
+
+this.router.navigate(['/posts'])
