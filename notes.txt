@@ -366,3 +366,21 @@ Disable the submit button :
 --------------------------
 git commit : 7c91c9288b102510343400cd1417894b89a521bd
 Use forms valid and dirty property
+
+
+
+
+Routing :
+--------
+git commit : 8b26c8dade425ae06ad8acdeea8de5d063f06001
+
+Refer app.module.ts to check the routes, navbar.component.html to check the router links.
+
+Import router module and add path in the import section.
+import { RouterModule } from '@angular/router'
+RouterModule.forRoot
+([ { path: '', component: HomeComponent } ])
+
+
+In the html, add routerLinks instead of href for the anchor tag
+<a routerLink="/posts">Posts</a>
