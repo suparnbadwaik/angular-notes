@@ -384,3 +384,13 @@ RouterModule.forRoot
 
 In the html, add routerLinks instead of href for the anchor tag
 <a routerLink="/posts">Posts</a>
+
+
+Router link active :
+-------------------
+git commit : 
+
+There is a directive called routerLinkActive which checks if the route link is active.
+And if the route link is active, you can specify classes to highlight it.
+
+<li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
