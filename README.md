@@ -4,7 +4,8 @@ https://github.com/suparnbadwaik/angular-notes
 `ng new sample-angular-app`		    // create a new angular boilerplate app
 `ng serve`				            // run angular app
 
-angular boilerplate app breakdown :
+
+Angular Boilerplate App Breakdown :
 -------------------------------------
 src :
 	It contains actual source code of our application.
