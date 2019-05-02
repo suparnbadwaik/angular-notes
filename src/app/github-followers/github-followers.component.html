@@ -3,6 +3,7 @@
 
 <ul>
   <li *ngFor="let follower of followerList">
-    <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
+    <!-- Path must match the route in app.module.ts -->
+    <a [routerLink]="['/followers', follower.id, follower.name]">{{ follower.name }}</a>
   </li>
 </ul>

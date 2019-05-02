@@ -406,6 +406,9 @@ routerLink property binding takes in an array that specifies the path and the qu
     <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
 </li>
 
+Passing multiple query parameters :
+----------------------------------
+<a [routerLink]="['/followers', follower.id, follower.name]">{{ follower.name }}</a>
 
 Programmatic Routing :
 ---------------------
