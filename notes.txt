@@ -401,7 +401,7 @@ Router Link from HTML with Query Parameters :
 --------------------------------------------
 git commit : 8cd04c65fc53247d739431a657cd65527a4843ba
 
-routerLink attribute takes in an array that specifies the path and the query parameters
+routerLink property binding takes in an array that specifies the path and the query parameters
 <li *ngFor="let follower of followerList">
     <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
 </li>
