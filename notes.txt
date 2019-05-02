@@ -382,11 +382,12 @@ RouterModule.forRoot
 ([ { path: '', component: HomeComponent } ])
 
 
+For simple routing i.e. routing to a page without passing any parameters, use the below :
 In the html, add routerLinks instead of href for the anchor tag
 <a routerLink="/posts">Posts</a>
 
 
-Router Link active :
+Router Link active  :
 -------------------
 git commit : 1504d2f866418f69c29123d806c9bc68d5f7c6f1
 
@@ -400,9 +401,11 @@ Router Link from HTML with Query Parameters :
 --------------------------------------------
 git commit : 8cd04c65fc53247d739431a657cd65527a4843ba
 
+routerLink attribute takes in an array that specifies the path and the query parameters
 <li *ngFor="let follower of followerList">
     <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
 </li>
+
 
 Programmatic Routing :
 ---------------------
