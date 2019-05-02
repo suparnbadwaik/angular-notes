@@ -55,6 +55,10 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
         component: GithubProfileComponent
       },
       {
+        path: 'followers/:userId/:userName',
+        component: GithubProfileComponent
+      },
+      {
         path: 'followers',
         component: GithubFollowersComponent
       },

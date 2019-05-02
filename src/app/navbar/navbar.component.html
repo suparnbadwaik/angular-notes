@@ -2,5 +2,10 @@
     <ul>
         <li routerLinkActive="active"><a routerLink="/followers">Followers</a></li>
         <li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
+        <li routerLinkActive="active">
+          <a 
+            routerLink="/followers" 
+            [queryParams]="{page: 1, order: 'newest'}">Test Query Params</a>
+        </li>
       </ul>
 </nav>

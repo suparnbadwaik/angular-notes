@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'github-followers',
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class GithubFollowersComponent implements OnInit {
 
   followerList: {};
-  constructor(private router: Router) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.followerList = [
@@ -19,6 +19,11 @@ export class GithubFollowersComponent implements OnInit {
       { id: 4, name:'Thanos' }
     ];
     console.log(this.followerList[0].name);
+
+    this.activatedRoute.paramMap.subscribe();
+    this.activatedRoute.queryParamMap.subscribe();
+    console.log(this.activatedRoute.snapshot.paramMap.get('id'));
+    console.log(this.activatedRoute.snapshot.queryParamMap.get('page'));
   }
 
   submit() {
