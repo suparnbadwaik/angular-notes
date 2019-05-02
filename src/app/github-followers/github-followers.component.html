@@ -1,4 +1,8 @@
-<p>
-  github-followers works!
-</p>
+<h3>Github Followers Page</h3>
 <button class="btn btn-primary" (click)="submit()">Submit and Redirect</button>
+
+<ul>
+  <li *ngFor="let follower of followerList">
+    <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
+  </li>
+</ul>
