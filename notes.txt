@@ -386,7 +386,7 @@ In the html, add routerLinks instead of href for the anchor tag
 <a routerLink="/posts">Posts</a>
 
 
-Router link active :
+Router Link active :
 -------------------
 git commit : 1504d2f866418f69c29123d806c9bc68d5f7c6f1
 
@@ -395,6 +395,14 @@ And if the route link is active, you can specify classes to highlight it.
 
 <li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
 
+
+Router Link from HTML with Query Parameters :
+--------------------------------------------
+git commit : 8cd04c65fc53247d739431a657cd65527a4843ba
+
+<li *ngFor="let follower of followerList">
+    <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
+</li>
 
 Programmatic Routing :
 ---------------------
