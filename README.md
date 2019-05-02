@@ -1,27 +1,399 @@
-# SampleAngularApp
+## GIT REPOSITORY : [Angular]
+https://github.com/suparnbadwaik/angular-notes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+`ng new sample-angular-app`		    // create a new angular boilerplate app
+`ng serve`				            // run angular app
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Angular Boilerplate App Breakdown :
+-------------------------------------
+src :
+	It contains actual source code of our application.
+	It contains the below :
+	directories :
+    ------------
+    app (d) : It contains atleast 1 module and 1 component.
+	assets (d) : contains static assets like text files, images, icons, etc.
+	environments (d) : stores configuration settings for different environments.
 
-## Code scaffolding
+    files :
+    ------
+	main.ts (f) : is starting point of the application. we bootstrap main module of our application here and 
+    everything else starts from here.
+	polyfills.ts (f) : it imports some script needed for running angular since angular uses javascript versions that are 
+    not available in the current version of javascript supported by most browsers. Polyfills fills the gap between 
+    javascript features that angular needs and those supported by the browser.
+	test.ts (f) : for setting up our testing environment.
+	.editorconfig (f) : if you have some settings for the editor that you want all the team members to use.
+	karma.conf.js (f) : configuration for karma, a test runner for javascript code.
+	tsconfig.json (f) : contains typescript compiler settings based on which your ts code will be compiled into js code.
+	tslint.json (f) : typescript analysis tool for static code.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+Web pack :
+---------
+Webpack is a build automation tool used by angular. It will automatically detect changes made to the code, 
+compile it, bundle it and minify it. This is called as Hot Module Replacement (HMR).
+It automatically injects the scripts at runtime in our page.
+It takes all our scripts and styles, combines them, puts them in a bundle and then minifies that bundle for optimization.
+It generates the below bundles usually :
+polyfills.bundle.js
+main.bundle.js
+styles.bundle.js	=> styles stored in minified js file
+vendor.bundle.js	=> contains 3rd party libraries
+inline.bundle.js
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## BASIC PARTS OF ANGULAR
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Module :
+-------
+Module is a container for group of related components. Every angular app has atleast 1 module which we call as app module.
+As the app grows, we mostly have multiple modules based on the functionality or the need.
+Eg for a teaching app modules can be.
+Courses, Messaging, Instructor, Admin
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Steps to create a component :
+----------------------------
+Create a component (.ts file)
+Register it in a module
+Add an element in an HTML markup
 
-## Further help
+Example :
+--------
+courses.component.ts :
+---------------------
+`import { Component } from '@angular/core';`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+`@Component({
+	selector: "courses",	//courses, .courses, #courses
+	template: "<h2>Courses</h2>"
+})`
+`export class CoursesComponent {
+
+}`
+
+app.module.ts :
+--------------
+`import { AppComponent } from "./app.component";
+import { CourseComponent } from "./courses.component";
+
+@NgModule({
+	declarations: [
+		AppComponent,
+		CoursesComponent
+	]
+});`
+
+In order to import the component without using the file name extension, use a VS code plugin named 'Auto Import'
+
+
+Problems with creating the Component manually :
+----------------------------------------------
+1. Approach is tedious viz. create a component class, import angular core to use component.
+2. Register manually with App modules. 
+
+If we miss any of the steps above, the component cannot be used/found.
+Better do it automatically using ng as shown below :
+`ng g c course`
+g - generate
+c - controller
+course - name of the component files eg. course.component.ts, course.component.html, course.component.class
+         The class will be named as CourseComponent
+
+
+`@Component({				            // This is a decorator
+	selector: "myapp",
+	template: "Hello App"
+});`
+
+
+`{{ "Title : " + myModel.title }}`		// data binding using expression
+`{{ myModel.getMyTitle() }}`			    // databinding using function
+
+
+
+Directives :
+-----------
+ngFor :
+-----
+Whenever you are using a directive that modifies the structure of a DOM, use * with that directive.
+template:`<ul>
+    <li *ngFor="let course of coursesList">{{course}}</li>		// coursesList is the object, course is the variable/placeholder
+</ul>`
+
+
+Services :
+---------
+Problems with Http Endpoints.
+1. If we use http endpoints within the component, it would make both tightly coupled which we do not want.
+In the future when we write Unit tests, we dont want to be dependent upon a live http endpoint.
+2. There might be another page which might need this endpoint and we might add logic for it. 
+So we use that endpoint in other file as well.
+3. If the endpoint url changes, we will have to manually change every single call of the http endpoint.
+4. Component must only include presentation logic and not any other logic.
+
+Creating a basic service :
+-------------------------
+`export class CoursesService {
+    getCourses() {
+        return [ "course1", "course2", "course3" ];
+    }
+}`
+
+
+Using it in a Component Class :
+------------------------------
+`export class CoursesComponent {
+    constructor() {
+        // INCORRECT WAY - Tighly coupled
+        let service = new CoursesService();
+        this.courses = service.getCourses();
+    }
+}`
+
+Since we are creating an instance of the service here, it becomes tighly coupled to the CoursesComponent class.
+Also, if we decide to add constructor parameters in the future, we will have to manually implement and change the declarations.
+So, rather than the above approach with these 2 problems, we can use the below approach.
+
+`export class CoursesComponent {
+    // CORRECT WAY
+    constructor(service: CoursesService) {
+        this.courses = service.getCourses();
+    }
+}`
+
+
+@NgModule :
+---------
+The NgModule decorator, located in app.module.ts file, consists of 4 details:
+1. declarations - declare components that you have created for the module
+2. imports - internal Modules that we want to use
+3. providers - array that registers all the dependencies that components in this module use.
+4. bootstrap - Module you want to start when the application starts
+
+So add to providers, the CoursesService.
+`@NgModule({
+    .....
+    providers: [ 
+        CoursesService
+    ]
+})`
+
+Note : When you add a dependency as a provider in a module, angular will create a sigle instance of that class or entire module.
+viz. angular will pass the same instance to all the classes, services or modules. Thus service is singleton.
+
+
+Creating a service automatically :
+---------------------------------
+`ng g s courses`
+s - service
+Creates courses.service file and CoursesService typescript class.
+
+
+@Injectable :
+------------
+When we create service automatically, we have @Injectable decorator that comes with it.
+It is needed "only if" the service has dependencies in its constructor.
+So why dont we need it in CoursesComponent ? The reason is that @Injectable is already present in the
+@Component decorator
+
+
+## DISPLAYING DATA AND HANDLING EVENTS
+
+Property binding :
+-----------------
+With property binding, we bind the property of a DOM element to property of the component
+`<img src="{{myProperty.imageURL}}" />`       // This is interpolation
+`<img [src]="myProperty.imageURL" />`         // This is property binding
+When we use interpolation in this case, angular translates it into the second syntax
+
+What to use when ?
+Interpolation works well for adding dynamic values for headings or to render text.
+eg: 
+`<h2>{{myProperty.title}}</h2>`       // better with interpolation
+`<h2 [textContent]="myProperty.title"></h2>`
+textContent is the property of the DOM.
+
+
+Attribute binding :
+------------------
+We need to understand DOM vs HTML to understand attribute binding.
+DOM is a model of object that represents structure of a document.
+It is essentially a tree of objects in memory.
+`<html>
+	<head>
+	</head>
+	<body>
+	</body>
+</html>`
+
+HTML is a markup language used to represent DOM.
+`<table>
+    <tr>
+        <td [attr.colspan]="myProperty.colspan"></td>
+    </tr>
+</table>`
+`attr.colspan` - tell angular that we are targetting attribute of an HTML element
+
+
+ngModel - Two way binding :
+---------------------------
+`<input type="text" [(ngModel)]="title" /> {{title}}`
+It wouldn't work and you will get a console error saying that
+the ngModel is not a property of input
+
+To use ngModel, we need to import and use (in imports section) FormsModule in the app.module.ts file
+
+
+Pipes :
+------
+`ng g p title-case`           // create a pipe
+
+
+Services :
+---------
+To use a service in angular, import HttpModule in App module and declare it in imports section.
+If you get the error : Cannot find module '@angular/http'
+Install http using npm. npm install @angular/http@latest
+
+Refer posts.component.html/ts in order to understand how UI and services work together.
+Make sure to inderstand the template placeholder in html file named #titles. The data passed and placeholder name must be the same.
+
+NOTE : Any initialization other than initialization of injected dependencies must be done on ngOnInit lifecycle/method
+
+`ng g s post`                 // create service using cli
+
+
+How to use a newly created service ? :
+-------------------------------------
+1. Add the new service to providers array in app.module.ts
+2. Inject the service in the component.ts file
+
+Note : If you are getting any issue with Observable or rxjs, install the below plugin.
+`npm install --save rxjs-compat`
+This command will install a package that ensures backward-compatibility of RxJS. Even though the 
+rxjs package itself would not work with your current code, with the addition of rxjs-compat it will.
+
+
+COMPONENTS :
+-----------
+Steps to emit from inner component to the outer component :
+----------------------------------------------------------
+git commit : 9a2295f3ef7522546ebec2294197ef591d45f849
+
+1. Add event to the outer component html. eg- favoriteChanged="isFavChanged()" and define isFavChanged() in ts
+2. Add the event function to the outer component ts file. eg isFavChanged() { //log something }
+3. Add the exact event name as in step 1 (favoriteChanged) as an output decorator and create an event emitter. 
+    eg. @Output() favoriteChanged=new EventEmitter();
+
+git commit : 59cdf84ef30542da4c44a6dba3c23ae93daedda8
+        `@Output('favChange') favoriteChanged=new EventEmitter();`    // give Alias to the Output decorator so that even 
+                                                                      // if event name is changed, the code does not break
+                                                                    // outerComp can now use favChange event to call its function
+4. Emit the change event from a function after which you want the outer component to be fired. eg. this.favoriteChanged.emit();
+Refer app.component.html/ts and favorite.component.html/ts for the example
+
+
+
+
+Passing the data through emit :
+------------------------------
+git commit : 
+21e75d4f300b0a08fb80397878d39c0d14457aea
+841f16ced1f889915a27ad6adc450b9e6d935db7
+
+`this.favoriteChanged.emit('test string');`       // you can also pass objects which can be refered from inner to outer component
+`this.newFavChange.emit(myObj);`                  // access it using eventArgs in the ts file
+
+
+Like Component :
+---------------
+git commit : 80bfbf916b43b941c82932185fd50e3dd36d0036
+
+
+Create Forms :
+-------------
+git commit : 906de16c6d870d14905006bf5924f9146f36e14a
+Refer contact-form.component.html and contact-form validation in style.css to check how to apply validation
+
+
+ngModelGroup :
+-------------
+git commit : b3d56f895233302cf5010092351bb2db534ab647
+ngModel can be used to refer a single element eg. we can set the ngModel property to a single control.
+ngModelGroup can be assigned to an entire section(s) in a form.
+Refer contact-form.component.html file to have a look on how to use the ngModelGroup.
+When you run the application, click the Submit button and check the form value. 
+It must contain contact and address objects instead of individual properties.
+
+
+Add radio button and other elements to the form :
+------------------------------------------------
+git commit : 0e3040b15ba02edc9a6019ec4c578dd9dc4db734
+
+
+Disable the submit button :
+--------------------------
+git commit : 7c91c9288b102510343400cd1417894b89a521bd
+Use forms valid and dirty property
+
+
+Routing :
+--------
+git commit : 8b26c8dade425ae06ad8acdeea8de5d063f06001
+
+Refer app.module.ts to check the routes, navbar.component.html to check the router links.
+
+Import router module and add path in the import section.
+import { RouterModule } from '@angular/router'
+RouterModule.forRoot
+`([ { path: "", component: HomeComponent } ])`
+
+
+For simple routing i.e. routing to a page without passing any parameters, use the below :
+In the html, add routerLinks instead of href for the anchor tag
+`<a routerLink="/posts">Posts</a>`
+
+
+Router Link active  :
+-------------------
+git commit : 1504d2f866418f69c29123d806c9bc68d5f7c6f1
+
+There is a directive called routerLinkActive which checks if the route link is active.
+And if the route link is active, you can specify classes to highlight it.
+
+`<li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>`
+
+
+Router Link from HTML with Query Parameters :
+--------------------------------------------
+git commit : 8cd04c65fc53247d739431a657cd65527a4843ba
+
+routerLink property binding takes in an array that specifies the path and the query parameters
+`<li *ngFor="let follower of followerList">
+    <a [routerLink]="['/follower', follower.id]">{{ follower.name }}</a>
+</li>`
+
+
+Passing multiple query parameters :
+----------------------------------
+`<a [routerLink]="['/followers', follower.id, follower.name]">{{ follower.name }}</a>`
+
+
+Programmatic Routing :
+---------------------
+git commit : b9beb72b1a32e1c48bc3d451c5abc24777b30155
+
+Refer github-followers.component.html/ts
+Inject router to the component ts and then use the navigate method. You can also pass the queryParams to the routes.
+
+`this.router.navigate(['/posts'])`
+
+
+Programmatically passing query parameters :
+------------------------------------------
+`this.router.navigate(['/followers'], {                  // Inject Router Class
+      queryParams: { page: 1, order: 'newest' }
+    });`
